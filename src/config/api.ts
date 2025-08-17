@@ -1,9 +1,9 @@
 // API Configuration with universal backend access
 // Backend URL that works with any frontend deployment
-// Updated: Fixed API endpoints with proper Vercel serverless structure - v3.1.1 - 2025-08-17-04:47
+// Updated: Using environment variables for production - v4.0
 const PRODUCTION_BACKEND_URL = 'https://editzbackend-h66xcra8p-ajay-s-projects-7337fb6b.vercel.app';
 
-// Force fresh evaluation - cache buster
+// Force fresh evaluation - cache buster  
 const CACHE_BUSTER = Date.now();
 
 // Detect environment more reliably
@@ -11,20 +11,25 @@ const isLocalhost = window.location.hostname === 'localhost' ||
                    window.location.hostname === '127.0.0.1' ||
                    window.location.hostname === '';
 
-// Use environment variable if available, otherwise use smart detection
-const API_BASE_URL = process.env.REACT_APP_API_URL || 
-                    process.env.REACT_APP_BACKEND_URL || (
+// Use environment variable if available, otherwise use fallback
+let backendUrl = process.env.REACT_APP_BACKEND_URL;
+if (backendUrl && !backendUrl.startsWith('http')) {
+  backendUrl = `https://${backendUrl}`;
+}
+
+const API_BASE_URL = backendUrl || (
   isLocalhost
     ? 'http://localhost:8000' // FastAPI default port for local development
     : PRODUCTION_BACKEND_URL   // Production backend regardless of frontend domain
 );
 
-console.log('🔧 API Configuration (Universal Access - Cache Buster):', {
+console.log('🔧 API Configuration (Environment Variables):', {
   hostname: window.location.hostname,
   href: window.location.href,
   isLocalhost,
   API_BASE_URL,
   environment: isLocalhost ? 'development' : 'production',
+  envBackendUrl: process.env.REACT_APP_BACKEND_URL,
   cacheBuster: CACHE_BUSTER,
   timestamp: new Date().toISOString()
 });

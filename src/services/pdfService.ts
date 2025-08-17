@@ -1,4 +1,5 @@
 import api from './api';
+import { API_ENDPOINTS } from '../config/api';
 
 export interface UploadResponse {
   id: string;
@@ -62,9 +63,9 @@ export interface ImageInfo {
  */
 export const uploadPDF = async (file: File): Promise<UploadResponse> => {
   const formData = new FormData();
-  formData.append('pdf', file);
+  formData.append('file', file); // Changed from 'pdf' to 'file' to match FastAPI
 
-  const response = await api.post('/upload/pdf', formData, {
+  const response = await api.post(API_ENDPOINTS.UPLOAD_PDF, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -82,7 +83,7 @@ export const uploadImages = async (files: File[]): Promise<UploadResponse> => {
     formData.append('images', file);
   });
 
-  const response = await api.post('/upload/images', formData, {
+  const response = await api.post(API_ENDPOINTS.UPLOAD_IMAGE, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
