@@ -1,7 +1,10 @@
 // API Configuration with universal backend access
 // Backend URL that works with any frontend deployment
-// Updated: Fixed API endpoints with proper /api/ prefix - v3.1
+// Updated: Fixed API endpoints with proper Vercel serverless structure - v3.1.1 - 2025-08-17-04:47
 const PRODUCTION_BACKEND_URL = 'https://editzbackend-h66xcra8p-ajay-s-projects-7337fb6b.vercel.app';
+
+// Force fresh evaluation - cache buster
+const CACHE_BUSTER = Date.now();
 
 // Detect environment more reliably
 const isLocalhost = window.location.hostname === 'localhost' || 
@@ -16,12 +19,14 @@ const API_BASE_URL = process.env.REACT_APP_API_URL ||
     : PRODUCTION_BACKEND_URL   // Production backend regardless of frontend domain
 );
 
-console.log('🔧 API Configuration (Universal Access):', {
+console.log('🔧 API Configuration (Universal Access - Cache Buster):', {
   hostname: window.location.hostname,
   href: window.location.href,
   isLocalhost,
   API_BASE_URL,
-  environment: isLocalhost ? 'development' : 'production'
+  environment: isLocalhost ? 'development' : 'production',
+  cacheBuster: CACHE_BUSTER,
+  timestamp: new Date().toISOString()
 });
 
 export const API_ENDPOINTS = {
