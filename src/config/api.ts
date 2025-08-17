@@ -1,6 +1,7 @@
 // API Configuration with universal backend access
 // Backend URL that works with any frontend deployment
-const PRODUCTION_BACKEND_URL = 'https://editzbackend-bjkixmcy2-ajay-s-projects-7337fb6b.vercel.app';
+// Updated: Fixed API endpoints with proper /api/ prefix - v3.1
+const PRODUCTION_BACKEND_URL = 'https://editzbackend-h66xcra8p-ajay-s-projects-7337fb6b.vercel.app';
 
 // Detect environment more reliably
 const isLocalhost = window.location.hostname === 'localhost' || 
@@ -24,22 +25,22 @@ console.log('🔧 API Configuration (Universal Access):', {
 });
 
 export const API_ENDPOINTS = {
-  // Upload endpoints
-  UPLOAD_PDF: `${API_BASE_URL}/upload/pdf`,
-  UPLOAD_IMAGE: `${API_BASE_URL}/upload/image`,
+  // Upload endpoints - Vercel serverless structure
+  UPLOAD_PDF: `${API_BASE_URL}/api/upload-pdf`,
+  UPLOAD_IMAGE: `${API_BASE_URL}/api/upload-image`,
   
   // PDF operations
-  PDF_METADATA: `${API_BASE_URL}/pdf/metadata`,
-  PDF_EXTRACT_TEXT: `${API_BASE_URL}/pdf/extract-text`,
-  PDF_EXTRACT_IMAGES: `${API_BASE_URL}/pdf/extract-images`,
-  PDF_CREATE_FROM_IMAGES: `${API_BASE_URL}/pdf/create-from-images`,
+  PDF_METADATA: `${API_BASE_URL}/api/pdf-metadata`,
+  PDF_EXTRACT_TEXT: `${API_BASE_URL}/api/extract-text`,
+  PDF_EXTRACT_IMAGES: `${API_BASE_URL}/api/extract-images`,
+  PDF_CREATE_FROM_IMAGES: `${API_BASE_URL}/api/create-from-images`,
   
   // Edit operations
-  EDIT_TEXT: `${API_BASE_URL}/edit/text`,
+  EDIT_TEXT: `${API_BASE_URL}/api/edit-text`,
   
   // Utility
-  HEALTH: `${API_BASE_URL}/health`,
-  DOWNLOAD: (filename: string) => `${API_BASE_URL.replace('/api', '')}/output/${filename}`
+  HEALTH: `${API_BASE_URL}/api/health`,
+  DOWNLOAD: (filename: string) => `${API_BASE_URL}/api/download/${filename}`
 };
 
 export default API_BASE_URL;
