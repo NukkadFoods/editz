@@ -1,7 +1,7 @@
 // API Configuration with universal backend access
 // Backend URL that works with any frontend deployment
 // Updated: Using environment variables for production - v5.0
-const PRODUCTION_BACKEND_URL = 'https://editzbackend-xfq4utkks-ajay-s-projects-7337fb6b.vercel.app';
+const PRODUCTION_BACKEND_URL = 'https://editzbackend-khrkvxgwc-ajay-s-projects-7337fb6b.vercel.app';
 
 // Force fresh evaluation - cache buster  
 const CACHE_BUSTER = Date.now() + Math.random();
