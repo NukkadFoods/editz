@@ -6,13 +6,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "react-scripts start",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "client": "react-scripts start",
-    "server": "cd backend && nodemon server.js",
-    "server:prod": "cd backend && node server.js",
-    "build": "NODE_ENV=production react-scripts build",
-    "build:backend": "echo 'Backend build complete'",
-    "vercel-build": "NODE_ENV=production npm run build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

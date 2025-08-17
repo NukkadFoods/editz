@@ -1,19 +1,21 @@
-// Detect if we're in production environment
-const isProduction = process.env.NODE_ENV === 'production' || 
-                    process.env.VERCEL === '1' || 
-                    window.location.hostname !== 'localhost';
+// API Configuration for separated backend
+// Backend will be deployed on Railway/Render/Heroku
+const PRODUCTION_BACKEND_URL = 'https://your-backend-url.railway.app'; // Update this after backend deployment
+
+const isLocalhost = window.location.hostname === 'localhost' || 
+                   window.location.hostname === '127.0.0.1' ||
+                   window.location.hostname === '';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || (
-  isProduction
-    ? '/api'  // Use relative path in production
-    : 'http://localhost:5000/api'
+  isLocalhost
+    ? 'http://localhost:8000' // FastAPI default port
+    : PRODUCTION_BACKEND_URL
 );
 
-console.log('🔧 API Configuration:', {
-  NODE_ENV: process.env.NODE_ENV,
-  VERCEL: process.env.VERCEL,
+console.log('🔧 API Configuration (Separated Backend):', {
   hostname: window.location.hostname,
-  isProduction,
+  href: window.location.href,
+  isLocalhost,
   API_BASE_URL
 });
 
