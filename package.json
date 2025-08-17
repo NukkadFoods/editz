@@ -10,9 +10,9 @@
     "client": "react-scripts start",
     "server": "cd backend && nodemon server.js",
     "server:prod": "cd backend && node server.js",
-    "build": "react-scripts build",
+    "build": "NODE_ENV=production react-scripts build",
     "build:backend": "echo 'Backend build complete'",
-    "vercel-build": "npm run build",
+    "vercel-build": "NODE_ENV=production npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

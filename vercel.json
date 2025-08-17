@@ -25,5 +25,9 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "REACT_APP_ENV": "production"
+  }
 }
