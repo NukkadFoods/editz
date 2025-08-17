@@ -1,22 +1,26 @@
-// API Configuration for separated backend
-// Backend will be deployed on Railway/Render/Heroku
-const PRODUCTION_BACKEND_URL = 'https://your-backend-url.railway.app'; // Update this after backend deployment
+// API Configuration with universal backend access
+// Backend URL that works with any frontend deployment
+const PRODUCTION_BACKEND_URL = 'https://editzbackend-bjkixmcy2-ajay-s-projects-7337fb6b.vercel.app';
 
+// Detect environment more reliably
 const isLocalhost = window.location.hostname === 'localhost' || 
                    window.location.hostname === '127.0.0.1' ||
                    window.location.hostname === '';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || (
+// Use environment variable if available, otherwise use smart detection
+const API_BASE_URL = process.env.REACT_APP_API_URL || 
+                    process.env.REACT_APP_BACKEND_URL || (
   isLocalhost
-    ? 'http://localhost:8000' // FastAPI default port
-    : PRODUCTION_BACKEND_URL
+    ? 'http://localhost:8000' // FastAPI default port for local development
+    : PRODUCTION_BACKEND_URL   // Production backend regardless of frontend domain
 );
 
-console.log('🔧 API Configuration (Separated Backend):', {
+console.log('🔧 API Configuration (Universal Access):', {
   hostname: window.location.hostname,
   href: window.location.href,
   isLocalhost,
-  API_BASE_URL
+  API_BASE_URL,
+  environment: isLocalhost ? 'development' : 'production'
 });
 
 export const API_ENDPOINTS = {
