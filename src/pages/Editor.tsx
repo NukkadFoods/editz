@@ -222,7 +222,16 @@ const Editor: React.FC = () => {
                   {/* Save/Download buttons */}
                   <div className="border-t pt-3 space-y-2">
                     <button
-                      onClick={downloadEditedPDF}
+                      onClick={() => {
+                        console.log('🔽 DOWNLOAD BUTTON CLICKED!');
+                        console.log('📋 Current document:', {
+                          hasDocument: !!currentDocument,
+                          hasFileId: !!currentDocument?.backendFileId,
+                          hasPdfData: !!currentDocument?.pdfData,
+                          isProcessing
+                        });
+                        downloadEditedPDF();
+                      }}
                       disabled={isProcessing || !currentDocument.backendFileId}
                       className="w-full flex items-center justify-center px-4 py-2 bg-primary-600 hover:bg-primary-700 disabled:bg-gray-400 text-white rounded-md font-medium transition-colors"
                     >

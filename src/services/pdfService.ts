@@ -181,13 +181,38 @@ export const editText = async (
  * Download the edited PDF
  */
 export const downloadPDF = async (fileId: string, pdfData: string): Promise<Blob> => {
-  const response = await api.post(`/pdf/${fileId}/download`, {
-    pdf_data: pdfData
-  }, {
-    responseType: 'blob',
+  console.log('🚀 PDF SERVICE: Download called with:', {
+    fileId,
+    pdfDataLength: pdfData.length,
+    endpoint: `/pdf/${fileId}/download`
   });
 
-  return response.data;
+  try {
+    const response = await api.post(`/pdf/${fileId}/download`, {
+      pdf_data: pdfData
+    }, {
+      responseType: 'blob',
+    });
+
+    console.log('✅ PDF SERVICE: Download response received:', {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+      dataType: typeof response.data,
+      dataSize: response.data?.size || 'unknown'
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('❌ PDF SERVICE: Download failed:', error);
+    console.error('❌ PDF SERVICE: Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      status: (error as any)?.response?.status,
+      statusText: (error as any)?.response?.statusText,
+      data: (error as any)?.response?.data
+    });
+    throw error;
+  }
 };
 
 /**
