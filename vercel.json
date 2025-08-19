@@ -7,17 +7,5 @@
   "env": {
     "REACT_APP_BACKEND_URL": "https://editzbackend-m30gegmdd-ajay-s-projects-7337fb6b.vercel.app",
     "REACT_APP_API_URL": "https://editzbackend-m30gegmdd-ajay-s-projects-7337fb6b.vercel.app"
-  },
-  "functions": {
-    "app/api/**/*.js": {
-      "maxDuration": 30
-    }
-  },
-  "redirects": [
-    {
-      "source": "/api/(.*)",
-      "destination": "https://editzbackend-m30gegmdd-ajay-s-projects-7337fb6b.vercel.app/$1",
-      "permanent": false
-    }
-  ]
+  }
 }
