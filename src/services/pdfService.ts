@@ -92,8 +92,8 @@ export const uploadPDF = async (file: File): Promise<UploadResponse> => {
   console.log('   Status:', response.status);
   console.log('   Fields:', Object.keys(response.data).length);
   console.log('   Field names:', Object.keys(response.data).join(', '));
-  console.log('   Has pdfData:', 'pdfData' in response.data);
-  console.log('   Has textMetadata:', 'textMetadata' in response.data);
+  console.log('   Has pdf_data:', 'pdf_data' in response.data);
+  console.log('   Has text_metadata:', 'text_metadata' in response.data);
   console.log('   Response data:', response.data);
 
   return response.data;

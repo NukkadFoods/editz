@@ -228,8 +228,11 @@ const Editor: React.FC = () => {
                           hasDocument: !!currentDocument,
                           hasFileId: !!currentDocument?.backendFileId,
                           hasPdfData: !!currentDocument?.pdfData,
+                          pdfDataLength: currentDocument?.pdfData?.length,
+                          pdfDataType: typeof currentDocument?.pdfData,
                           isProcessing
                         });
+                        console.log('🔍 Raw pdfData value:', currentDocument?.pdfData);
                         downloadEditedPDF();
                       }}
                       disabled={isProcessing || !currentDocument.backendFileId}

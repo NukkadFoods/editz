@@ -264,6 +264,17 @@ export const usePDFEditor = (): UsePDFEditorReturn => {
       }
 
       const result = await response.json();
+      
+      console.log('🔍 EDIT RESPONSE DEBUG:');
+      console.log('   response ok:', response.ok);
+      console.log('   result keys:', Object.keys(result));
+      console.log('   result.success:', result.success);
+      console.log('   result.message:', result.message);
+      console.log('   result.pdf_data present:', !!result.pdf_data);
+      console.log('   result.pdf_data type:', typeof result.pdf_data);
+      console.log('   result.pdf_data length:', result.pdf_data?.length);
+      console.log('   result.modifiedPdfData present:', !!result.modifiedPdfData);
+      console.log('   full result:', result);
 
       if (result.success) {
         console.log('✅ Text edit successful:', result.message);
@@ -275,7 +286,7 @@ export const usePDFEditor = (): UsePDFEditorReturn => {
             ...prev,
             hasChanges: true,
             updatedAt: new Date(),
-            pdfData: result.modifiedPdfData, // Backend returns 'modifiedPdfData'
+            pdfData: result.pdf_data, // Backend returns 'pdf_data', not 'modifiedPdfData'
             pages: prev.pages.map(page => 
               page.pageNumber === pageNumber 
                 ? { 
