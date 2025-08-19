@@ -317,22 +317,8 @@ export const usePDFEditor = (): UsePDFEditorReturn => {
     try {
       console.log('⬇️ Downloading edited PDF...');
       
-      // Make API call to stateless backend
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/pdf/${currentDocument.backendFileId}/download`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pdf_data: currentDocument.pdfData
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const blob = await response.blob();
+      // Use the pdfService function
+      const blob = await downloadPDF(currentDocument.backendFileId, currentDocument.pdfData);
       
       // Create download link
       const url = window.URL.createObjectURL(blob);

@@ -180,8 +180,10 @@ export const editText = async (
 /**
  * Download the edited PDF
  */
-export const downloadPDF = async (fileId: string): Promise<Blob> => {
-  const response = await api.get(`/pdf/${fileId}/download`, {
+export const downloadPDF = async (fileId: string, pdfData: string): Promise<Blob> => {
+  const response = await api.post(`/pdf/${fileId}/download`, {
+    pdf_data: pdfData
+  }, {
     responseType: 'blob',
   });
 
