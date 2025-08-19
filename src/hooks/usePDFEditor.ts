@@ -46,13 +46,13 @@ export const usePDFEditor = (): UsePDFEditorReturn => {
       console.log('🐛 DEBUG: Upload response type:', typeof uploadResponse);
       console.log('🐛 DEBUG: Upload response is object?:', uploadResponse && typeof uploadResponse === 'object');
       console.log('🐛 DEBUG: Full response:', JSON.stringify(uploadResponse, null, 2));
-      console.log('🐛 DEBUG: textItems present?', 'textItems' in uploadResponse);
-      console.log('🐛 DEBUG: textItems type:', typeof (uploadResponse as any).textItems);
-      console.log('🐛 DEBUG: textItems value:', (uploadResponse as any).textItems);
-      console.log('🐛 DEBUG: pdfData present?', 'pdfData' in uploadResponse);
-      console.log('🐛 DEBUG: textMetadata present?', 'textMetadata' in uploadResponse);
-      console.log('🐛 DEBUG: pdfData length:', (uploadResponse as any).pdfData?.length || 'undefined');
-      console.log('🐛 DEBUG: textMetadata keys:', (uploadResponse as any).textMetadata ? Object.keys((uploadResponse as any).textMetadata).length : 'undefined');
+      console.log('🐛 DEBUG: text_items present?', 'text_items' in uploadResponse);
+      console.log('🐛 DEBUG: text_items type:', typeof (uploadResponse as any).text_items);
+      console.log('🐛 DEBUG: text_items value:', (uploadResponse as any).text_items);
+      console.log('🐛 DEBUG: pdf_data present?', 'pdf_data' in uploadResponse);
+      console.log('🐛 DEBUG: text_metadata present?', 'text_metadata' in uploadResponse);
+      console.log('🐛 DEBUG: pdf_data length:', (uploadResponse as any).pdf_data?.length || 'undefined');
+      console.log('🐛 DEBUG: text_metadata keys:', (uploadResponse as any).text_metadata ? Object.keys((uploadResponse as any).text_metadata).length : 'undefined');
       
       // Log ALL keys that exist in the response
       console.log('🔍 ALL RESPONSE PROPERTIES:');
@@ -63,9 +63,9 @@ export const usePDFEditor = (): UsePDFEditorReturn => {
       // Process text items from upload response
       const textDataByPage: {[pageNumber: number]: LocalTextItem[]} = {};
       
-      // Check if upload response includes textItems
-      if ((uploadResponse as any).textItems && Array.isArray((uploadResponse as any).textItems)) {
-        const textItems = (uploadResponse as any).textItems;
+      // Check if upload response includes text_items (backend returns text_items, not textItems)
+      if ((uploadResponse as any).text_items && Array.isArray((uploadResponse as any).text_items)) {
+        const textItems = (uploadResponse as any).text_items;
         console.log(`📝 Processing ${textItems.length} text items from upload response`);
         
         // Group text items by page
@@ -104,15 +104,15 @@ export const usePDFEditor = (): UsePDFEditorReturn => {
         pages: [],
         createdAt: new Date(),
         updatedAt: new Date(),
-        backendFileId: uploadResponse.fileId, // Backend returns 'fileId'
+        backendFileId: (uploadResponse as any).file_id, // Backend returns 'file_id'
         metadata: uploadResponse.metadata || { 
           pageCount: Math.max(...Object.keys(textDataByPage).map(Number)) || 1 
         },
         textData: textDataByPage, // Use the processed text data
         hasChanges: false,
         // Store backend data for stateless operations
-        pdfData: uploadResponse.pdfData, // Base64 PDF data from backend
-        textMetadata: uploadResponse.textMetadata // Text metadata from backend
+        pdfData: (uploadResponse as any).pdf_data, // Base64 PDF data from backend
+        textMetadata: (uploadResponse as any).text_metadata // Text metadata from backend
       };
 
       // Verify the backend data was stored correctly
