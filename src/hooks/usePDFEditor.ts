@@ -316,9 +316,13 @@ export const usePDFEditor = (): UsePDFEditorReturn => {
     setIsProcessing(true);
     try {
       console.log('⬇️ Downloading edited PDF...');
+      console.log('📋 File ID:', currentDocument.backendFileId);
+      console.log('📋 PDF Data length:', currentDocument.pdfData.length);
       
       // Use the pdfService function
       const blob = await downloadPDF(currentDocument.backendFileId, currentDocument.pdfData);
+      
+      console.log('📦 Received blob:', blob.size, 'bytes, type:', blob.type);
       
       // Create download link
       const url = window.URL.createObjectURL(blob);
@@ -337,6 +341,16 @@ export const usePDFEditor = (): UsePDFEditorReturn => {
       
     } catch (error) {
       console.error('❌ Download failed:', error);
+      console.error('❌ Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        currentDocument: currentDocument ? {
+          name: currentDocument.name,
+          hasFileId: !!currentDocument.backendFileId,
+          hasPdfData: !!currentDocument.pdfData,
+          pdfDataLength: currentDocument.pdfData?.length
+        } : null
+      });
       toast.error('Failed to download PDF. Please try again.');
     } finally {
       setIsProcessing(false);
